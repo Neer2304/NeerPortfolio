@@ -1,0 +1,27 @@
+import dashboard from "@/assets/grocery dashboard.png"
+import forget from "@/assets/grocery forget.png"
+import login from "@/assets/Screenshot 2025-07-09 201352.png"
+import home from "@/assets/grocery home manage.jpg"
+import otp from "@/assets/otp verify.png"
+import neer from "@/assets/neer_main.jpg"
+import neer_gibili from "@/assets/Neer_gibili.jpg"
+import resumemaker from "@/assets/notavailableimage.jpg"
+import accountmanagement from "@/assets/Yellow and Purple Business Management Facebook Cover.png"
+import mycliniclogin from "@/assets/myclinic login.png"
+import myclinicadminlogin from "@/assets/myclinic admin login.png"
+import myclinicpage1 from "@/assets/myclinic doctor.png"
+import myclinicpage2 from "@/assets/myclinic hospital.png"
+import myclinicpage3 from "@/assets/myclinic drawer.png"
+import myclinicpage4 from "@/assets/myclinic deactivate.png"
+import myclinicpage5 from "@/assets/myclinic plan.png"
+import Amlogin from "@/assets/AC_Login.png"
+import Amsign from "@/assets/AM_LOGO.png"
+import Amdash from "@/assets/AC_dashboard.png"
+import Amproduct from "@/assets/AC_product.png"
+import Amadd from "@/assets/AC_addproduct.png"
+import Ambilling from "@/assets/AC_billing.png"
+import Amorders from "@/assets/AC_orders.png"
+
+export const assets = {
+    dashboard,forget,login,home,otp,neer,neer_gibili,resumemaker,accountmanagement,mycliniclogin,myclinicadminlogin,myclinicpage1,myclinicpage2,myclinicpage3,myclinicpage4,myclinicpage5,Amadd,Ambilling,Amlogin,Amorders,Amproduct,Amdash
+}
