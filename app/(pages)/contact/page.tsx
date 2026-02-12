@@ -310,7 +310,7 @@ function Contact() {
                 lineHeight: 1.6,
               }}
             >
-              Have a question or want to work together? I'd love to hear from you!
+              Have a question or want to work together? I had love to hear from you!
             </Typography>
           </Box>
         </Fade>
@@ -484,7 +484,7 @@ function Contact() {
                     Available for Work
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    I'm currently open to freelance opportunities, internships, and full-time positions.
+                    I am currently open to freelance opportunities, internships, and full-time positions.
                   </Typography>
                   <Chip
                     label="Response time: within 24 hours"
@@ -532,7 +532,7 @@ function Contact() {
                 </Typography>
 
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-                  Fill out the form below and I'll get back to you as soon as possible.
+                  Fill out the form below and I will get back to you as soon as possible.
                 </Typography>
 
                 <Box component="form" onSubmit={handleSubmit} sx={{ flex: 1 }}>

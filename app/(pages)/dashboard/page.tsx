@@ -381,7 +381,7 @@ function Dashboard() {
                     mt: 0.5,
                   }}
                 >
-                  Track your portfolio's performance and visitor analytics in real-time
+                  Track your portfolio performance and visitor analytics in real-time
                 </Typography>
               </Box>
             </Box>

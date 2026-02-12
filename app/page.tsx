@@ -5,12 +5,10 @@ import {
   ThemeProvider,
   CssBaseline,
   Box,
-  Container,
   createTheme,
   alpha,
   PaletteMode,
 } from "@mui/material";
-import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
@@ -280,7 +278,7 @@ function App() {
           }}
         >
           {/* <Header mode={mode} setMode={setMode} /> */}
-          <Hero mode={mode} />
+          <Hero />
           <About />
           <Skills />
           <Projects />

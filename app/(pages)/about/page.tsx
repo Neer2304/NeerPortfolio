@@ -97,7 +97,7 @@ function About() {
   const formRef = useRef<HTMLFormElement>(null);
   const emojiButtonRef = useRef<HTMLButtonElement>(null);
 
-  const [addSuggestion, { isLoading, isSuccess, error }] =
+  const [addSuggestion, { isLoading}] =
     useAddSuggestionMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -117,7 +117,7 @@ function About() {
         position: "top-right",
         theme: mode,
       });
-    } catch (err) {
+    } catch{
       toast.error("Something went wrong. Try again.", {
         position: "top-right",
         theme: mode,
@@ -547,7 +547,7 @@ function About() {
                       fontSize: "1rem",
                     }}
                   >
-                    I'm <strong>Neer Mehta</strong> — a dedicated software
+                    I m <strong>Neer Mehta</strong> — a dedicated software
                     developer passionate about crafting clean, user-friendly,
                     and responsive web applications. My journey began with
                     curiosity about how the web works, and now I turn ideas into
@@ -567,7 +567,7 @@ function About() {
                     <strong>Next.js</strong>, styling with{" "}
                     <strong>Tailwind CSS</strong> and <strong>Material UI</strong>,
                     and state management with <strong>Redux Toolkit</strong>.
-                    I've built real projects like admin panels, e-commerce
+                    I have built real projects like admin panels, e-commerce
                     dashboards, and SaaS platforms, collaborating with teams,
                     integrating REST APIs, and delivering pixel-perfect UIs.
                   </Typography>

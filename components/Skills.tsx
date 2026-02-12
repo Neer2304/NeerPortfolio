@@ -31,7 +31,6 @@ import { motion } from 'framer-motion';
 
 export default function Skills() {
   const theme = useTheme();
-  const mode = theme.palette.mode;
 
   const techStack = [
     { name: 'HTML5', color: '#e44d26', icon: <FaHtml5 />, category: 'Frontend' },

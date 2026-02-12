@@ -14,7 +14,6 @@ import {
   useTheme,
   alpha,
   Avatar,
-  Drawer,
   List,
   ListItem,
   ListItemButton,
@@ -42,7 +41,11 @@ const navItems = [
   { name: "Home", path: "/", icon: <Home sx={{ fontSize: 18 }} /> },
   { name: "Projects", path: "/projects", icon: <Code sx={{ fontSize: 18 }} /> },
   { name: "About", path: "/about", icon: <Person sx={{ fontSize: 18 }} /> },
-  { name: "Dashboard", path: "/dashboard", icon: <Dashboard sx={{ fontSize: 18 }} /> },
+  {
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: <Dashboard sx={{ fontSize: 18 }} />,
+  },
   { name: "Contact", path: "/contact", icon: <Email sx={{ fontSize: 18 }} /> },
 ];
 
@@ -54,9 +57,10 @@ export default function Header() {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
   const toggleMode = () => setMode(mode === "light" ? "dark" : "light");
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
+    setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
-  
+
   const handleDrawerToggle = () => {
     setMobileDrawerOpen(!mobileDrawerOpen);
   };
@@ -91,7 +95,11 @@ export default function Header() {
             N
           </Avatar>
           <Box>
-            <Link href="/" style={{ textDecoration: "none" }} onClick={handleDrawerToggle}>
+            <Link
+              href="/"
+              style={{ textDecoration: "none" }}
+              onClick={handleDrawerToggle}
+            >
               <Typography
                 variant="h6"
                 sx={{
@@ -101,7 +109,7 @@ export default function Header() {
                   fontSize: "1.1rem",
                 }}
               >
-                Neer's Portfolio
+                {"Neer's Portfolio"}
               </Typography>
               <Typography
                 variant="caption"
@@ -125,7 +133,11 @@ export default function Header() {
       <List sx={{ px: 2, py: 3 }}>
         {navItems.map((item) => (
           <ListItem key={item.path} disablePadding sx={{ mb: 1 }}>
-            <Link href={item.path} style={{ textDecoration: "none", width: "100%" }} onClick={handleDrawerToggle}>
+            <Link
+              href={item.path}
+              style={{ textDecoration: "none", width: "100%" }}
+              onClick={handleDrawerToggle}
+            >
               <ListItemButton
                 selected={isActive(item.path)}
                 sx={{
@@ -145,7 +157,9 @@ export default function Header() {
                 <ListItemIcon
                   sx={{
                     minWidth: 40,
-                    color: isActive(item.path) ? "primary.main" : "text.secondary",
+                    color: isActive(item.path)
+                      ? "primary.main"
+                      : "text.secondary",
                   }}
                 >
                   {item.icon}
@@ -155,7 +169,9 @@ export default function Header() {
                   primaryTypographyProps={{
                     fontSize: "0.95rem",
                     fontWeight: isActive(item.path) ? 600 : 500,
-                    color: isActive(item.path) ? "primary.main" : "text.primary",
+                    color: isActive(item.path)
+                      ? "primary.main"
+                      : "text.primary",
                   }}
                 />
               </ListItemButton>
@@ -229,7 +245,14 @@ export default function Header() {
               </IconButton>
 
               {/* Logo */}
-              <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+              <Link
+                href="/"
+                style={{
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <Avatar
                   sx={{
                     width: { xs: 32, sm: 36 },
@@ -251,24 +274,38 @@ export default function Header() {
                     display: { xs: "none", sm: "block" },
                   }}
                 >
-                  Neer's Portfolio
+                {"Neer's Portfolio"}
                 </Typography>
               </Link>
             </Box>
 
             {/* Desktop Navigation */}
-            <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: 1 }}>
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
               {navItems.map((item) => (
-                <Link href={item.path} key={item.path} style={{ textDecoration: "none" }}>
+                <Link
+                  href={item.path}
+                  key={item.path}
+                  style={{ textDecoration: "none" }}
+                >
                   <Button
                     startIcon={item.icon}
                     sx={{
-                      color: isActive(item.path) ? "primary.main" : "text.primary",
+                      color: isActive(item.path)
+                        ? "primary.main"
+                        : "text.primary",
                       fontWeight: isActive(item.path) ? 600 : 500,
                       borderRadius: "100px",
                       px: 2,
                       py: 1,
-                      bgcolor: isActive(item.path) ? alpha(theme.palette.primary.main, 0.1) : "transparent",
+                      bgcolor: isActive(item.path)
+                        ? alpha(theme.palette.primary.main, 0.1)
+                        : "transparent",
                       "&:hover": {
                         bgcolor: isActive(item.path)
                           ? alpha(theme.palette.primary.main, 0.15)
@@ -280,14 +317,16 @@ export default function Header() {
                   </Button>
                 </Link>
               ))}
-              
+
               <IconButton
                 onClick={toggleMode}
                 sx={{
                   ml: 1,
                   bgcolor: alpha(theme.palette.primary.main, 0.1),
                   color: "text.primary",
-                  "&:hover": { bgcolor: alpha(theme.palette.primary.main, 0.2) },
+                  "&:hover": {
+                    bgcolor: alpha(theme.palette.primary.main, 0.2),
+                  },
                 }}
               >
                 {mode === "dark" ? <Brightness7 /> : <Brightness4 />}
@@ -295,7 +334,13 @@ export default function Header() {
             </Box>
 
             {/* Mobile Actions */}
-            <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", gap: 1 }}>
+            <Box
+              sx={{
+                display: { xs: "flex", md: "none" },
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
               <IconButton
                 onClick={toggleMode}
                 sx={{
@@ -305,14 +350,14 @@ export default function Header() {
               >
                 {mode === "dark" ? <Brightness7 /> : <Brightness4 />}
               </IconButton>
-              
+
               <IconButton
                 onClick={handleMenuOpen}
                 sx={{ color: "text.primary" }}
               >
                 <MenuIcon />
               </IconButton>
-              
+
               <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
@@ -333,8 +378,12 @@ export default function Header() {
                     key={item.path}
                     onClick={handleMenuClose}
                     sx={{
-                      color: isActive(item.path) ? "primary.main" : "text.primary",
-                      bgcolor: isActive(item.path) ? alpha(theme.palette.primary.main, 0.1) : "transparent",
+                      color: isActive(item.path)
+                        ? "primary.main"
+                        : "text.primary",
+                      bgcolor: isActive(item.path)
+                        ? alpha(theme.palette.primary.main, 0.1)
+                        : "transparent",
                     }}
                   >
                     <Link

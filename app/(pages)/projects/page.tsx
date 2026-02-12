@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react"; // Removed useRef
 import {
   Box,
   Container,
@@ -127,9 +127,6 @@ export default function ProjectsPage() {
 function Projects() {
   const theme = useTheme();
   const { mode } = useThemeMode();
-  
-  // Create refs for each swiper instance
-  const swiperRefs = useRef<(any | null)[]>([]);
 
   return (
     <Box
@@ -474,9 +471,6 @@ function Projects() {
                   {/* Image Gallery */}
                   <Box sx={{ position: 'relative' }}>
                     <Swiper
-                      onSwiper={(swiper) => {
-                        swiperRefs.current[index] = swiper;
-                      }}
                       modules={[Pagination, Navigation, Autoplay, EffectFade]}
                       effect="fade"
                       fadeEffect={{ crossFade: true }}
@@ -509,7 +503,6 @@ function Projects() {
                               height: { xs: 250, sm: 350, md: 450, lg: 500 },
                               borderRadius: 3,
                               overflow: 'hidden',
-                              // boxShadow: `0 20px 32px -8px ${alpha(theme.shadows || '#000000', 0.2)}`,
                               border: '1px solid',
                               borderColor: 'divider',
                               transition: 'transform 0.3s ease',

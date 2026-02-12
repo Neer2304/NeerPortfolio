@@ -19,7 +19,6 @@ import { motion } from "framer-motion";
 
 export default function Contact() {
   const theme = useTheme();
-  const mode = theme.palette.mode;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -88,7 +87,7 @@ export default function Contact() {
               mb: 2,
             }}
           >
-            Let's Work Together
+            Let us Work Together
           </Typography>
           <Typography
             variant="body1"
@@ -99,7 +98,7 @@ export default function Contact() {
               fontSize: { xs: '0.95rem', md: '1rem' },
             }}
           >
-            Have a project in mind? I'd love to hear about it. Drop me a message and I'll get back to you as soon as possible.
+            Have a project in mind? I had love to hear about it. Drop me a message and I will get back to you as soon as possible.
           </Typography>
         </Box>
 
@@ -285,7 +284,7 @@ export default function Contact() {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert severity="success" variant="filled" sx={{ width: '100%' }}>
-          🎉 Message sent successfully! I'll get back to you soon.
+          🎉 Message sent successfully! I will get back to you soon.
         </Alert>
       </Snackbar>
     </Box>

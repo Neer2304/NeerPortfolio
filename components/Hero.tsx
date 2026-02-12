@@ -7,7 +7,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaDownload, FaPaperPlane } from "react-icons/fa";
 
-export default function Hero({ mode }: { mode: "light" | "dark" }) {
+export default function Hero() {
   const theme = useTheme();
   const MotionBox = motion(Box);
 
@@ -65,7 +65,7 @@ export default function Hero({ mode }: { mode: "light" | "dark" }) {
                 color: 'text.primary',
               }}
             >
-              Hi, I'm{' '}
+              Hi, I am{' '}
               <Box
                 component="span"
                 sx={{

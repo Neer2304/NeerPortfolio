@@ -181,7 +181,7 @@ export default function About() {
                   color: 'text.primary',
                 }}
               >
-                Hey! I'm <strong>Neer</strong>, a passionate Frontend Developer with a keen eye for design and a love for building exceptional digital experiences. 
+                Hey! I am <strong>Neer</strong>, a passionate Frontend Developer with a keen eye for design and a love for building exceptional digital experiences. 
               </Typography>
 
               <Typography
@@ -205,7 +205,7 @@ export default function About() {
                   color: 'text.secondary',
                 }}
               >
-                Currently, I'm working on exciting projects like <strong>AccuManage</strong> (inventory automation) and a <strong>Resume Builder</strong> app. I believe in continuous learning and staying updated with the latest technologies.
+                Currently, I am working on exciting projects like <strong>AccuManage</strong> (inventory automation) and a <strong>Resume Builder</strong> app. I believe in continuous learning and staying updated with the latest technologies.
               </Typography>
 
               <Box sx={{ mt: 'auto', pt: 2 }}>
@@ -217,7 +217,7 @@ export default function About() {
                     fontWeight: 500,
                   }}
                 >
-                  "Building the web, one component at a time."
+                  Building the web, one component at a time.
                 </Typography>
               </Box>
             </Paper>

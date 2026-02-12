@@ -3,7 +3,7 @@
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import Link from "next/link";
-import { Box, Container, Typography, Chip, useTheme, alpha, IconButton } from "@mui/material";
+import { Box, Container, Typography, Chip, useTheme, alpha } from "@mui/material";
 import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";

@@ -11,7 +11,7 @@ import {
   useTheme,
   alpha,
 } from "@mui/material";
-import { FaGithub, FaLinkedin, FaTwitter, FaHeart } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaHeart } from "react-icons/fa";
 import { Instagram } from "@mui/icons-material";
 
 export default function Footer() {
