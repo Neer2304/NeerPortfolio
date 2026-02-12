@@ -208,7 +208,7 @@ export default function Header() {
               Neer Mehta
             </Typography>
             <Typography variant="caption" sx={{ color: "text.secondary" }}>
-              neer@example.com
+              mehtaneer143@gmail.com
             </Typography>
           </Box>
         </Box>
