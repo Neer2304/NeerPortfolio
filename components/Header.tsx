@@ -33,9 +33,9 @@ import {
   Dashboard,
   Close as CloseIcon,
 } from "@mui/icons-material";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useThemeMode } from "./Layout/MainLayout";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const navItems = [
   { name: "Home", path: "/", icon: <Home sx={{ fontSize: 18 }} /> },
