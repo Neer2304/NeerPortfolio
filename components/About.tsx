@@ -1,79 +1,229 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Typography,
   Container,
+  Box,
+  Chip,
+  useTheme,
+  alpha,
+  Avatar,
   Paper,
-  Skeleton,
 } from "@mui/material";
+import { motion } from "framer-motion";
+import { FaHeart, FaCode, FaCoffee } from "react-icons/fa";
 
 export default function About() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate a network request
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); // 2 sec fake delay
-
-    return () => clearTimeout(timer);
-  }, []);
+  const theme = useTheme();
+  const mode = theme.palette.mode;
+  const MotionBox = motion(Box);
 
   return (
-    <Container sx={{ py: 8 }}>
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          background: "rgba(255, 255, 255, 0.05)",
-          backdropFilter: "blur(8px)",
-          borderRadius: 3,
-        }}
-      >
-        {loading ? (
-          <>
-            <Skeleton variant="text" width="40%" height={50} />
-            <Skeleton variant="text" width="100%" height={30} />
-            <Skeleton variant="text" width="100%" height={30} />
-            <Skeleton variant="text" width="90%" height={30} />
-            <Skeleton variant="text" width="95%" height={30} />
-            <Skeleton variant="text" width="100%" height={30} />
-            <Skeleton variant="text" width="85%" height={30} />
-          </>
-        ) : (
-          <>
-            <Typography variant="h4" gutterBottom>
-              About Me
-            </Typography>
+    <Box
+      component="section"
+      id="about"
+      sx={{
+        py: { xs: 2, md: 4 },
+        bgcolor: mode === 'light' ? '#f8f9fa' : 'background.default',
+      }}
+    >
+      <Container maxWidth="lg">
+        <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
+          <Chip
+            label="ABOUT ME"
+            size="small"
+            sx={{
+              mb: 2,
+              bgcolor: alpha(theme.palette.primary.main, 0.1),
+              color: theme.palette.primary.main,
+              fontWeight: 600,
+              letterSpacing: '1px',
+            }}
+          />
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 600,
+              fontSize: { xs: '1.75rem', sm: '2rem', md: '2.5rem' },
+              mb: 2,
+            }}
+          >
+            Who is Neer?
+          </Typography>
+        </Box>
 
-            <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-              Hey! I’m <strong>Neer</strong>, a passionate{" "}
-              <strong>Frontend Developer</strong> specializing in building modern,
-              responsive web applications with <strong>Next.js</strong>,{" "}
-              <strong>React</strong> and the best of today’s frontend stack.
-            </Typography>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+            gap: { xs: 4, md: 6 },
+            alignItems: 'center',
+          }}
+        >
+          {/* Left - Stats Cards */}
+          <MotionBox
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Paper
+              elevation={0}
+              sx={{
+                p: { xs: 3, md: 4 },
+                bgcolor: 'background.paper',
+                borderRadius: 4,
+                border: '1px solid',
+                borderColor: 'divider',
+              }}
+            >
+              <Typography variant="h5" sx={{ fontWeight: 600, mb: 3 }}>
+                📊 Quick Stats
+              </Typography>
+              
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                {[
+                  { label: 'Projects Completed', value: '7+', color: '#34a853' },
+                  { label: 'Hours of Coding', value: '1000+', color: '#1a73e8' },
+                  // { label: 'Coffee Consumed', value: '∞', color: '#f9ab00' },
+                  { label: 'Happy Clients', value: '2+', color: '#d93025' },
+                ].map((stat, i) => (
+                  <Box
+                    key={i}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      p: 1.5,
+                      borderRadius: 2,
+                      bgcolor: alpha(stat.color, 0.05),
+                      border: '1px solid',
+                      borderColor: alpha(stat.color, 0.1),
+                    }}
+                  >
+                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                      {stat.label}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      sx={{ fontWeight: 700, color: stat.color }}
+                    >
+                      {stat.value}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
 
-            <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-              I love crafting clean UI and turning ideas into pixel-perfect,
-              functional experiences. Whether it’s designing reusable components,
-              integrating APIs, or polishing the user flow — I’m always pushing
-              for better performance and maintainable code.
-            </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  mt: 4,
+                  justifyContent: 'space-around',
+                }}
+              >
+                <Box sx={{ textAlign: 'center' }}>
+                  <Avatar sx={{ bgcolor: alpha('#1a73e8', 0.1), mx: 'auto', mb: 1 }}>
+                    <FaCode color="#1a73e8" />
+                  </Avatar>
+                  <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                    Clean Code
+                  </Typography>
+                </Box>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Avatar sx={{ bgcolor: alpha('#34a853', 0.1), mx: 'auto', mb: 1 }}>
+                    <FaHeart color="#34a853" />
+                  </Avatar>
+                  <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                    User First
+                  </Typography>
+                </Box>
+                <Box sx={{ textAlign: 'center' }}>
+                  <Avatar sx={{ bgcolor: alpha('#f9ab00', 0.1), mx: 'auto', mb: 1 }}>
+                    <FaCoffee color="#f9ab00" />
+                  </Avatar>
+                  <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                    Dedicated
+                  </Typography>
+                </Box>
+              </Box>
+            </Paper>
+          </MotionBox>
 
-            <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-              I enjoy collaborating with teams, staying updated with the latest
-              tech, and constantly leveling up my skills. Right now, I’m
-              exploring advanced dashboard designs, building custom tools like a{" "}
-              <strong>CRM model</strong> (like Tally) and a{" "}
-              <strong>Resume Maker</strong> app — always learning, always building.
-            </Typography>
+          {/* Right - Bio */}
+          <MotionBox
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Paper
+              elevation={0}
+              sx={{
+                p: { xs: 3, md: 4 },
+                bgcolor: 'background.paper',
+                borderRadius: 4,
+                border: '1px solid',
+                borderColor: 'divider',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <Typography variant="h5" sx={{ fontWeight: 600, mb: 2 }}>
+                💭 My Journey
+              </Typography>
+              
+              <Typography
+                variant="body1"
+                paragraph
+                sx={{
+                  fontSize: { xs: '0.95rem', md: '1rem' },
+                  lineHeight: 1.8,
+                  color: 'text.primary',
+                }}
+              >
+                Hey! I'm <strong>Neer</strong>, a passionate Frontend Developer with a keen eye for design and a love for building exceptional digital experiences. 
+              </Typography>
 
-            <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
-              Let’s connect — I’m excited to bring your ideas to life!
-            </Typography>
-          </>
-        )}
-      </Paper>
-    </Container>
+              <Typography
+                variant="body1"
+                paragraph
+                sx={{
+                  fontSize: { xs: '0.95rem', md: '1rem' },
+                  lineHeight: 1.8,
+                  color: 'text.secondary',
+                }}
+              >
+                My journey into web development started with curiosity and evolved into a career where I get to blend creativity with technical problem-solving. I specialize in <strong>Next.js</strong> and <strong>React</strong>, creating responsive, performant, and accessible applications.
+              </Typography>
+
+              <Typography
+                variant="body1"
+                paragraph
+                sx={{
+                  fontSize: { xs: '0.95rem', md: '1rem' },
+                  lineHeight: 1.8,
+                  color: 'text.secondary',
+                }}
+              >
+                Currently, I'm working on exciting projects like <strong>AccuManage</strong> (inventory automation) and a <strong>Resume Builder</strong> app. I believe in continuous learning and staying updated with the latest technologies.
+              </Typography>
+
+              <Box sx={{ mt: 'auto', pt: 2 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontStyle: 'italic',
+                    color: 'primary.main',
+                    fontWeight: 500,
+                  }}
+                >
+                  "Building the web, one component at a time."
+                </Typography>
+              </Box>
+            </Paper>
+          </MotionBox>
+        </Box>
+      </Container>
+    </Box>
   );
 }

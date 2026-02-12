@@ -1,145 +1,240 @@
 "use client";
 
 import React from "react";
-import { Box, Typography, Button, Stack } from "@mui/material";
+import { Box, Typography, Button, Container, Chip, useTheme, alpha } from "@mui/material";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { FaDownload, FaPaperPlane } from "react-icons/fa";
 
 export default function Hero({ mode }: { mode: "light" | "dark" }) {
+  const theme = useTheme();
+  const MotionBox = motion(Box);
+
   return (
     <Box
+      component="section"
       sx={{
-        minHeight: "90vh",
-        display: "flex",
-        alignItems: "center",
-        px: { xs: 4, md: 12 },
+        minHeight: { xs: 'auto', md: '90vh' },
+        display: 'flex',
+        alignItems: 'center',
+        pt: { xs: 8, md: 4 },
+        pb: { xs: 8, md: 0 },
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-          gap: { xs: 4, md: 8 }
-        }}
-      >
-        {/* LEFT side - Text content */}
+      <Container maxWidth="lg">
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            textAlign: { xs: "center", md: "left" },
-            width: { xs: "100%", md: "50%" },
-            order: { xs: 2, md: 1 }
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+            gap: { xs: 4, md: 6 },
+            alignItems: 'center',
           }}
         >
-          <Typography
-            variant="h2"
+          {/* Left Content */}
+          <MotionBox
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
             sx={{
-              fontWeight: "bold",
-              mb: 2,
-              lineHeight: 1.2,
-              color: mode === "light" ? "#111827" : "#f5f5f5",
-              fontSize: {
-                xs: "1.8rem",
-                sm: "2.2rem",
-                md: "2.5rem",
-                lg: "3rem",
-                xl: "3.5rem",
-              },
+              order: { xs: 2, md: 1 },
+              textAlign: { xs: 'center', md: 'left' },
             }}
           >
-            {`Hi, I'm Neer 👋`}
-          </Typography>
-
-          <Typography
-            variant="h5"
-            sx={{
-              mb: 4,
-              color: mode === "light" ? "#374151" : "#e5e7eb",
-              maxWidth: "95%",
-              fontSize: {
-                xs: "1rem",
-                sm: "1.1rem",
-                md: "1.25rem",
-                lg: "1.5rem",
-              },
-              lineHeight: {
-                xs: 1.5,
-                md: 1.6,
-              },
-            }}
-          >
-            Detail-oriented software developer building clean, responsive web
-            apps with Next.js, Tailwind CSS, and Redux.
-          </Typography>
-
-          <Stack 
-            direction="row" 
-            spacing={2}
-            justifyContent={{ xs: "center", md: "flex-start" }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              href="/Neer_Resume.pdf"
-              target="_blank"
-              rel="noopener"
-              size="large"
-            >
-              📄 Download CV
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              href="#contact"
-              size="large"
-            >
-              ✨ Hire Me
-            </Button>
-          </Stack>
-        </Box>
-
-        {/* RIGHT side - Image */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: { xs: "center", md: "flex-end" },
-            alignItems: "center",
-            width: { xs: "100%", md: "50%" },
-            order: { xs: 1, md: 2 }
-          }}
-        >
-          <Box
-            sx={{
-              position: "relative",
-              width: {
-                xs: "80%",
-                sm: 300,
-                md: 360,
-              },
-              maxWidth: 400,
-              height: "auto",
-              ml: { md: "-60px" },
-            }}
-          >
-            <Image
-              src={assets.neer_gibili}
-              alt="Neer Ghibli Portrait"
-              style={{
-                width: "100%",
-                height: "auto",
-                display: "block",
-                borderRadius: "20px",
+            <Chip
+              label="👋 WELCOME TO MY PORTFOLIO"
+              size="small"
+              sx={{
+                mb: 3,
+                bgcolor: alpha(theme.palette.primary.main, 0.1),
+                color: theme.palette.primary.main,
+                fontWeight: 600,
+                letterSpacing: '1px',
               }}
-              priority
             />
-          </Box>
+            
+            <Typography
+              variant="h1"
+              sx={{
+                fontWeight: 700,
+                fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem', lg: '3.5rem' },
+                mb: 2,
+                lineHeight: 1.2,
+                color: 'text.primary',
+              }}
+            >
+              Hi, I'm{' '}
+              <Box
+                component="span"
+                sx={{
+                  color: 'primary.main',
+                  position: 'relative',
+                  display: 'inline-block',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: 4,
+                    left: 0,
+                    width: '100%',
+                    height: '8px',
+                    bgcolor: alpha(theme.palette.primary.main, 0.2),
+                    zIndex: -1,
+                  },
+                }}
+              >
+                Neer
+              </Box>
+            </Typography>
+
+            <Typography
+              variant="h5"
+              sx={{
+                mb: 3,
+                color: 'text.secondary',
+                fontWeight: 400,
+                fontSize: { xs: '1.1rem', sm: '1.25rem', md: '1.35rem' },
+                maxWidth: { xs: '100%', md: '90%' },
+              }}
+            >
+              Frontend Developer specializing in{' '}
+              <Box component="span" sx={{ fontWeight: 600, color: 'text.primary' }}>
+                Next.js, React
+              </Box>
+              , and building beautiful web experiences.
+            </Typography>
+
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                justifyContent: { xs: 'center', md: 'flex-start' },
+                flexWrap: 'wrap',
+              }}
+            >
+              <Button
+                variant="contained"
+                size="large"
+                href="/Neer_Resume.pdf"
+                target="_blank"
+                startIcon={<FaDownload />}
+                sx={{
+                  bgcolor: 'primary.main',
+                  color: '#fff',
+                  px: { xs: 3, md: 4 },
+                  '&:hover': {
+                    bgcolor: alpha(theme.palette.primary.main, 0.9),
+                  },
+                }}
+              >
+                Download CV
+              </Button>
+              <Button
+                variant="outlined"
+                size="large"
+                href="#contact"
+                startIcon={<FaPaperPlane />}
+                sx={{
+                  borderColor: 'divider',
+                  color: 'text.primary',
+                  px: { xs: 3, md: 4 },
+                  '&:hover': {
+                    borderColor: 'primary.main',
+                    bgcolor: alpha(theme.palette.primary.main, 0.04),
+                  },
+                }}
+              >
+                Contact Me
+              </Button>
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 3,
+                mt: 5,
+                justifyContent: { xs: 'center', md: 'flex-start' },
+              }}
+            >
+              {['2+', '10+', '24/7'].map((stat, i) => (
+                <Box key={i} sx={{ textAlign: 'center' }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: 700, color: 'primary.main', fontSize: { xs: '1.1rem', md: '1.25rem' } }}
+                  >
+                    {stat}
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
+                    {i === 0 ? 'Years Experience' : i === 1 ? 'Projects Done' : 'Support'}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          </MotionBox>
+
+          {/* Right Image */}
+          <MotionBox
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            sx={{
+              order: { xs: 1, md: 2 },
+              position: 'relative',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              sx={{
+                position: 'relative',
+                width: { xs: 240, sm: 280, md: 320, lg: 360 },
+                height: { xs: 240, sm: 280, md: 320, lg: 360 },
+              }}
+            >
+              {/* Background decoration */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  inset: -10,
+                  background: `radial-gradient(circle, ${alpha(theme.palette.primary.main, 0.15)} 0%, transparent 70%)`,
+                  borderRadius: '50%',
+                  animation: 'pulse 3s infinite',
+                  '@keyframes pulse': {
+                    '0%': { transform: 'scale(0.95)', opacity: 0.5 },
+                    '50%': { transform: 'scale(1.05)', opacity: 0.8 },
+                    '100%': { transform: 'scale(0.95)', opacity: 0.5 },
+                  },
+                }}
+              />
+              
+              {/* Image */}
+              <Box
+                sx={{
+                  position: 'relative',
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+                  overflow: 'hidden',
+                  border: '4px solid',
+                  borderColor: 'background.paper',
+                  boxShadow: `0 20px 40px -10px ${alpha('#000', 0.3)}`,
+                }}
+              >
+                <Image
+                  src={assets.neer_gibili}
+                  alt="Neer"
+                  fill
+                  sizes="(max-width: 768px) 240px, 360px"
+                  style={{ objectFit: 'cover' }}
+                  priority
+                />
+              </Box>
+            </Box>
+          </MotionBox>
         </Box>
-      </Box>
+      </Container>
     </Box>
   );
 }

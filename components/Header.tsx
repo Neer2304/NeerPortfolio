@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -8,218 +8,374 @@ import {
   Button,
   Box,
   IconButton,
-  Tooltip,
   Menu,
   MenuItem,
-  useMediaQuery,
+  Container,
   useTheme,
+  alpha,
+  Avatar,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  SwipeableDrawer,
 } from "@mui/material";
 import {
   Brightness4,
   Brightness7,
   Menu as MenuIcon,
+  Home,
+  Person,
+  Code,
+  Email,
+  Dashboard,
+  Close as CloseIcon,
 } from "@mui/icons-material";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useThemeMode } from "./Layout/MainLayout";
 
-export default function Header({
-  mode,
-  setMode,
-}: {
-  mode: "light" | "dark";
-  setMode: (mode: "light" | "dark") => void;
-}) {
+const navItems = [
+  { name: "Home", path: "/", icon: <Home sx={{ fontSize: 18 }} /> },
+  { name: "Projects", path: "/projects", icon: <Code sx={{ fontSize: 18 }} /> },
+  { name: "About", path: "/about", icon: <Person sx={{ fontSize: 18 }} /> },
+  { name: "Dashboard", path: "/dashboard", icon: <Dashboard sx={{ fontSize: 18 }} /> },
+  { name: "Contact", path: "/contact", icon: <Email sx={{ fontSize: 18 }} /> },
+];
+
+export default function Header() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const pathname = usePathname();
+  const { mode, setMode } = useThemeMode();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
-  const toggleMode = () => {
-    setMode(mode === "light" ? "dark" : "light");
+  const toggleMode = () => setMode(mode === "light" ? "dark" : "light");
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
+  
+  const handleDrawerToggle = () => {
+    setMobileDrawerOpen(!mobileDrawerOpen);
   };
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const isActive = (path: string) => {
+    if (path === "/") return pathname === "/";
+    return pathname?.startsWith(path);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <AppBar
-      position="sticky"
-      sx={{
-        top: 0,
-        zIndex: 1100,
-        background: "rgba(15, 12, 41, 0.85)",
-        backdropFilter: "blur(10px)",
-        boxShadow: "none",
-      }}
-    >
-      <Toolbar sx={{ minHeight: { xs: 56, sm: 64 } }}>
-        <Typography
-          variant="h6"
-          sx={{
-            flexGrow: 1,
-            fontSize: { xs: "1.1rem", sm: "1.25rem", md: "1.5rem" },
-          }}
-        >
-          {`Neer's Portfolio`}
-        </Typography>
-
-        {isMobile ? (
-          <>
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label="menu"
-              onClick={handleMenuOpen}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-              sx={{
-                mt: 1,
-                "& .MuiPaper-root": {
-                  backgroundColor: "#000000",
-                  color: "#ffffff",
-                  minWidth: "200px",
-                },
-              }}
-            >
-              <MenuItem onClick={handleMenuClose}>
-                <Link
-                  href="/about"
-                  style={{
-                    width: "100%",
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
-                  About
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <Link
-                  href="/projects"
-                  style={{
-                    width: "100%",
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
-                  Projects
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <Link
-                  href="/dashboard"
-                  style={{
-                    width: "100%",
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
-                  Dashboard
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <Link
-                  href="/contact"
-                  style={{
-                    width: "100%",
-                    color: "inherit",
-                    textDecoration: "none",
-                  }}
-                >
-                  Contact
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={toggleMode}>
-                {mode === "dark" ? "Light Mode" : "Dark Mode"}
-              </MenuItem>
-            </Menu>
-          </>
-        ) : (
-          <Box
+  // Mobile drawer content
+  const drawerContent = (
+    <Box sx={{ width: 280, height: "100%", bgcolor: "background.paper" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          p: 2,
+          minHeight: 64,
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+          <Avatar
             sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: { xs: 0.5, sm: 1, md: 2 },
+              width: 40,
+              height: 40,
+              bgcolor: "primary.main",
+              fontSize: "1.2rem",
+              fontWeight: 600,
             }}
           >
-            <Button
-              color="inherit"
-              sx={{
-                minWidth: 0,
-                fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
-              }}
-            >
-              <Link
-                href="/about"
-                style={{ textDecoration: "none", color: "inherit" }}
+            N
+          </Avatar>
+          <Box>
+            <Link href="/" style={{ textDecoration: "none" }} onClick={handleDrawerToggle}>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 600,
+                  color: "text.primary",
+                  lineHeight: 1.2,
+                  fontSize: "1.1rem",
+                }}
               >
-                About
-              </Link>
-            </Button>
-            <Button
-              color="inherit"
-              sx={{
-                minWidth: 0,
-                fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
-              }}
-            >
-              <Link
-                href="/projects"
-                style={{ textDecoration: "none", color: "inherit" }}
+                Neer's Portfolio
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: "text.secondary",
+                  fontSize: "0.7rem",
+                }}
               >
-                Projects
-              </Link>
-            </Button>
-            <Button
-              color="inherit"
-              sx={{
-                minWidth: 0,
-                fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
-              }}
-            >
-              <Link
-                href="/dashboard"
-                style={{ textDecoration: "none", color: "inherit" }}
+                Frontend Developer
+              </Typography>
+            </Link>
+          </Box>
+        </Box>
+        <IconButton onClick={handleDrawerToggle}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
+
+      <Divider sx={{ mx: 2 }} />
+
+      <List sx={{ px: 2, py: 3 }}>
+        {navItems.map((item) => (
+          <ListItem key={item.path} disablePadding sx={{ mb: 1 }}>
+            <Link href={item.path} style={{ textDecoration: "none", width: "100%" }} onClick={handleDrawerToggle}>
+              <ListItemButton
+                selected={isActive(item.path)}
+                sx={{
+                  borderRadius: 3,
+                  py: 1.2,
+                  "&.Mui-selected": {
+                    bgcolor: alpha(theme.palette.primary.main, 0.1),
+                    "&:hover": {
+                      bgcolor: alpha(theme.palette.primary.main, 0.15),
+                    },
+                    "& .MuiListItemIcon-root": {
+                      color: "primary.main",
+                    },
+                  },
+                }}
               >
-                Dashboard
-              </Link>
-            </Button>
-            <Button
-              color="inherit"
-              sx={{
-                minWidth: 0,
-                fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
-              }}
-            >
-              <Link
-                href="/contact"
-                style={{ textDecoration: "none", color: "inherit" }}
+                <ListItemIcon
+                  sx={{
+                    minWidth: 40,
+                    color: isActive(item.path) ? "primary.main" : "text.secondary",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.name}
+                  primaryTypographyProps={{
+                    fontSize: "0.95rem",
+                    fontWeight: isActive(item.path) ? 600 : 500,
+                    color: isActive(item.path) ? "primary.main" : "text.primary",
+                  }}
+                />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+        ))}
+      </List>
+
+      <Divider sx={{ mx: 2 }} />
+
+      <Box sx={{ p: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            p: 1.5,
+            bgcolor: alpha(theme.palette.primary.main, 0.05),
+            borderRadius: 3,
+          }}
+        >
+          <Avatar
+            sx={{
+              width: 32,
+              height: 32,
+              bgcolor: "primary.main",
+              fontSize: "0.875rem",
+              mr: 1,
+            }}
+          >
+            N
+          </Avatar>
+          <Box>
+            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+              Neer Mehta
+            </Typography>
+            <Typography variant="caption" sx={{ color: "text.secondary" }}>
+              neer@example.com
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  );
+
+  return (
+    <>
+      <AppBar
+        position="sticky"
+        elevation={0}
+        sx={{
+          bgcolor: alpha(theme.palette.background.default, 0.85),
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid",
+          borderColor: "divider",
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
+            {/* Left section - Menu button + Logo */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              {/* Menu button for mobile/tablet - opens drawer */}
+              <IconButton
+                onClick={handleDrawerToggle}
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  color: "text.primary",
+                  mr: 1,
+                }}
               >
-                Contact
+                <MenuIcon />
+              </IconButton>
+
+              {/* Logo */}
+              <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
+                <Avatar
+                  sx={{
+                    width: { xs: 32, sm: 36 },
+                    height: { xs: 32, sm: 36 },
+                    mr: 1,
+                    bgcolor: "primary.main",
+                    fontSize: { xs: "0.9rem", sm: "1rem" },
+                    fontWeight: 600,
+                  }}
+                >
+                  N
+                </Avatar>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: { xs: "1rem", sm: "1.1rem", md: "1.2rem" },
+                    color: "text.primary",
+                    display: { xs: "none", sm: "block" },
+                  }}
+                >
+                  Neer's Portfolio
+                </Typography>
               </Link>
-            </Button>
-            <Tooltip
-              title={
-                mode === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"
-              }
-              arrow
-            >
-              <IconButton sx={{ ml: 1 }} onClick={toggleMode} color="inherit">
+            </Box>
+
+            {/* Desktop Navigation */}
+            <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: 1 }}>
+              {navItems.map((item) => (
+                <Link href={item.path} key={item.path} style={{ textDecoration: "none" }}>
+                  <Button
+                    startIcon={item.icon}
+                    sx={{
+                      color: isActive(item.path) ? "primary.main" : "text.primary",
+                      fontWeight: isActive(item.path) ? 600 : 500,
+                      borderRadius: "100px",
+                      px: 2,
+                      py: 1,
+                      bgcolor: isActive(item.path) ? alpha(theme.palette.primary.main, 0.1) : "transparent",
+                      "&:hover": {
+                        bgcolor: isActive(item.path)
+                          ? alpha(theme.palette.primary.main, 0.15)
+                          : alpha(theme.palette.primary.main, 0.05),
+                      },
+                    }}
+                  >
+                    {item.name}
+                  </Button>
+                </Link>
+              ))}
+              
+              <IconButton
+                onClick={toggleMode}
+                sx={{
+                  ml: 1,
+                  bgcolor: alpha(theme.palette.primary.main, 0.1),
+                  color: "text.primary",
+                  "&:hover": { bgcolor: alpha(theme.palette.primary.main, 0.2) },
+                }}
+              >
                 {mode === "dark" ? <Brightness7 /> : <Brightness4 />}
               </IconButton>
-            </Tooltip>
-          </Box>
-        )}
-      </Toolbar>
-    </AppBar>
+            </Box>
+
+            {/* Mobile Actions */}
+            <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", gap: 1 }}>
+              <IconButton
+                onClick={toggleMode}
+                sx={{
+                  bgcolor: alpha(theme.palette.primary.main, 0.1),
+                  color: "text.primary",
+                }}
+              >
+                {mode === "dark" ? <Brightness7 /> : <Brightness4 />}
+              </IconButton>
+              
+              <IconButton
+                onClick={handleMenuOpen}
+                sx={{ color: "text.primary" }}
+              >
+                <MenuIcon />
+              </IconButton>
+              
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                sx={{
+                  mt: 1.5,
+                  "& .MuiPaper-root": {
+                    bgcolor: "background.paper",
+                    border: "1px solid",
+                    borderColor: "divider",
+                    borderRadius: 3,
+                    minWidth: "200px",
+                  },
+                }}
+              >
+                {navItems.map((item) => (
+                  <MenuItem
+                    key={item.path}
+                    onClick={handleMenuClose}
+                    sx={{
+                      color: isActive(item.path) ? "primary.main" : "text.primary",
+                      bgcolor: isActive(item.path) ? alpha(theme.palette.primary.main, 0.1) : "transparent",
+                    }}
+                  >
+                    <Link
+                      href={item.path}
+                      style={{
+                        width: "100%",
+                        color: "inherit",
+                        textDecoration: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "12px",
+                      }}
+                    >
+                      {item.icon}
+                      {item.name}
+                    </Link>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      {/* Mobile Drawer - for smaller screens */}
+      <SwipeableDrawer
+        anchor="left"
+        open={mobileDrawerOpen}
+        onClose={handleDrawerToggle}
+        onOpen={handleDrawerToggle}
+        sx={{
+          display: { xs: "block", md: "none" },
+          "& .MuiDrawer-paper": {
+            width: 280,
+            boxSizing: "border-box",
+            bgcolor: "background.paper",
+          },
+        }}
+      >
+        {drawerContent}
+      </SwipeableDrawer>
+    </>
   );
 }

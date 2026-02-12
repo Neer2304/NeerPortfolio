@@ -4,6 +4,9 @@ import {
   Container,
   Typography,
   Box,
+  Chip,
+  useTheme,
+  alpha,
 } from '@mui/material';
 import {
   FaHtml5,
@@ -11,116 +14,173 @@ import {
   FaJs,
   FaReact,
   FaGitAlt,
+  FaFigma,
+  FaNodeJs,
 } from 'react-icons/fa';
 import {
   SiNextdotjs,
   SiRedux,
   SiTailwindcss,
+  SiTypescript,
+  SiMongodb,
+  SiFirebase,
+  SiVercel,
 } from 'react-icons/si';
 import { GiMaterialsScience } from "react-icons/gi";
-import { BiLogoTypescript } from "react-icons/bi";
+import { motion } from 'framer-motion';
 
 export default function Skills() {
+  const theme = useTheme();
+  const mode = theme.palette.mode;
+
   const techStack = [
-    { name: 'HTML', color: '#e44d26', icon: <FaHtml5 /> },
-    { name: 'CSS', color: '#1572b6', icon: <FaCss3Alt /> },
-    { name: 'JavaScript', color: '#f7df1e', icon: <FaJs /> },
-    { name: 'React', color: '#61dafb', icon: <FaReact /> },
-    { name: 'Next.js', color: '#000000', icon: <SiNextdotjs /> },
-    { name: 'Material UI', color: '#007fff', icon: <GiMaterialsScience /> },
-    { name: 'TypeScript', color: '#3178c6', icon: <BiLogoTypescript /> },
-    { name: 'Git', color: '#f1502f', icon: <FaGitAlt /> },
-    { name: 'Redux', color: '#764abc', icon: <SiRedux /> },
-    { name: 'Tailwind CSS', color: '#38bdf8', icon: <SiTailwindcss /> },
+    { name: 'HTML5', color: '#e44d26', icon: <FaHtml5 />, category: 'Frontend' },
+    { name: 'CSS3', color: '#1572b6', icon: <FaCss3Alt />, category: 'Frontend' },
+    { name: 'JavaScript', color: '#f7df1e', icon: <FaJs />, category: 'Frontend' },
+    { name: 'TypeScript', color: '#3178c6', icon: <SiTypescript />, category: 'Frontend' },
+    { name: 'React', color: '#61dafb', icon: <FaReact />, category: 'Frontend' },
+    { name: 'Next.js', color: '#000000', icon: <SiNextdotjs />, category: 'Frontend' },
+    { name: 'Redux', color: '#764abc', icon: <SiRedux />, category: 'State' },
+    { name: 'Material UI', color: '#007fff', icon: <GiMaterialsScience />, category: 'UI' },
+    { name: 'Tailwind', color: '#38bdf8', icon: <SiTailwindcss />, category: 'UI' },
+    { name: 'Node.js', color: '#339933', icon: <FaNodeJs />, category: 'Backend' },
+    { name: 'MongoDB', color: '#47A248', icon: <SiMongodb />, category: 'Database' },
+    { name: 'Firebase', color: '#FFCA28', icon: <SiFirebase />, category: 'Backend' },
+    { name: 'Git', color: '#f1502f', icon: <FaGitAlt />, category: 'Tools' },
+    { name: 'Figma', color: '#F24E1E', icon: <FaFigma />, category: 'Design' },
+    { name: 'Vercel', color: '#000000', icon: <SiVercel />, category: 'DevOps' },
   ];
 
+  const categories = ['Frontend', 'UI', 'State', 'Backend', 'Database', 'Tools', 'Design', 'DevOps'];
+  
+  const MotionBox = motion(Box);
+
   return (
-    <Container sx={{ 
-      py: { xs: 4, sm: 6, md: 8 },
-      px: { xs: 2, sm: 3, md: 4 }
-    }}>
-      <Typography variant="h4" gutterBottom sx={{ 
-        fontSize: { xs: '1.75rem', sm: '2rem', md: '2.125rem' },
-        textAlign: { xs: 'center', sm: 'left' }
-      }}>
-        Skills & Technologies
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: 1, 
-        }}
-      >
-        {techStack.map((tech) => (
-          <div
-            key={tech.name}
-            className="w-full sm:w-1/4 md:w-1/6 lg:w-1/8 p-1"
-            style={{
-              flex: '0 0 auto',
-              maxWidth: '100%',
+    <Box
+      component="section"
+      id="skills"
+      sx={{
+        py: { xs: 4, md: 6 },
+        bgcolor: 'background.default',
+      }}
+    >
+      <Container maxWidth="lg">
+        <Box sx={{ mb: { xs: 4, md: 6 }, textAlign: 'center' }}>
+          <Chip
+            label="EXPERTISE"
+            size="small"
+            sx={{
+              mb: 2,
+              bgcolor: alpha(theme.palette.primary.main, 0.1),
+              color: theme.palette.primary.main,
+              fontWeight: 600,
+              letterSpacing: '1px',
+            }}
+          />
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 600,
+              fontSize: { xs: '1.75rem', sm: '2rem', md: '2.5rem' },
+              mb: 1,
             }}
           >
-            <Box
-              sx={{
-                width: { 
-                  xs: 80, 
-                  sm: 85, 
-                  md: 90, 
-                  lg: 100 
-                },
-                height: { 
-                  xs: 80, 
-                  sm: 85, 
-                  md: 90, 
-                  lg: 100 
-                },
-                bgcolor: tech.color,
-                color: tech.color === '#f7df1e' || tech.color === '#61dafb' ? '#000' : '#fff',
-                borderRadius: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-5px)',
-                  boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
-                },
-                textAlign: 'center',
-                p: 1,
-                margin: '0 auto', 
-              }}
-            >
-              <Box sx={{ 
-                fontSize: { 
-                  xs: 24, 
-                  sm: 28, 
-                  md: 32 
-                } 
-              }}>
-                {tech.icon}
-              </Box>
+            Skills & Technologies
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'text.secondary',
+              maxWidth: '600px',
+              mx: 'auto',
+              fontSize: { xs: '0.95rem', md: '1rem' },
+            }}
+          >
+            Technologies I work with to build amazing applications
+          </Typography>
+        </Box>
+
+        {categories.map((category, catIndex) => {
+          const categorySkills = techStack.filter(tech => tech.category === category);
+          if (categorySkills.length === 0) return null;
+
+          return (
+            <Box key={category} sx={{ mb: { xs: 4, md: 6 } }}>
               <Typography
-                variant="body2"
-                sx={{ 
-                  mt: { xs: 0.5, sm: 1 },
-                  fontWeight: 500,
-                  fontSize: { 
-                    xs: '0.7rem', 
-                    sm: '0.75rem', 
-                    md: '0.8125rem' 
-                  }
+                variant="subtitle1"
+                sx={{
+                  fontWeight: 600,
+                  mb: 2,
+                  color: 'text.secondary',
+                  fontSize: { xs: '0.9rem', md: '1rem' },
+                  letterSpacing: '1px',
                 }}
               >
-                {tech.name}
+                {category.toUpperCase()}
               </Typography>
+              
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: {
+                    xs: 'repeat(3, 1fr)',
+                    sm: 'repeat(4, 1fr)',
+                    md: 'repeat(5, 1fr)',
+                    lg: 'repeat(6, 1fr)',
+                  },
+                  gap: { xs: 1.5, sm: 2, md: 2.5 },
+                }}
+              >
+                {categorySkills.map((tech, index) => (
+                  <MotionBox
+                    key={tech.name}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 + catIndex * 0.1 }}
+                    whileHover={{ y: -5 }}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      p: { xs: 1.5, sm: 2 },
+                      bgcolor: 'background.paper',
+                      borderRadius: 3,
+                      border: '1px solid',
+                      borderColor: 'divider',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        borderColor: tech.color,
+                        boxShadow: `0 8px 16px -4px ${alpha(tech.color, 0.2)}`,
+                      },
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        fontSize: { xs: 24, sm: 28, md: 32 },
+                        color: tech.color,
+                        mb: 0.5,
+                      }}
+                    >
+                      {tech.icon}
+                    </Box>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: { xs: '0.65rem', sm: '0.7rem', md: '0.75rem' },
+                        color: 'text.primary',
+                        textAlign: 'center',
+                      }}
+                    >
+                      {tech.name}
+                    </Typography>
+                  </MotionBox>
+                ))}
+              </Box>
             </Box>
-          </div>
-        ))}
-      </Box>
-    </Container>
+          );
+        })}
+      </Container>
+    </Box>
   );
 }
