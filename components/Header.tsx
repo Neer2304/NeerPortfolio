@@ -32,6 +32,7 @@ import {
   Email,
   Dashboard,
   Close as CloseIcon,
+  ThreeSixty,
 } from "@mui/icons-material";
 import { useThemeMode } from "./Layout/MainLayout";
 import { usePathname } from "next/navigation";
@@ -47,6 +48,11 @@ const navItems = [
     icon: <Dashboard sx={{ fontSize: 18 }} />,
   },
   { name: "Contact", path: "/contact", icon: <Email sx={{ fontSize: 18 }} /> },
+  {
+    name: "3D",
+    path: "3d-portfolio",
+    icon: <ThreeSixty sx={{ fontSize: 18 }} />,
+  },
 ];
 
 export default function Header() {
