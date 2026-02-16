@@ -145,26 +145,27 @@ function VisitorAnalytics() {
     refetch,
   } = useGetVisitorAnalyticsQuery();
 
-  // Filter visitors based on time range - get last 50 only
-  const filteredVisitors = visitors
-    .filter((v) => {
-      const selectedOption = timeRangeOptions.find(
-        (opt) => opt.value === timeRange,
-      );
-      if (!selectedOption?.days) return true;
-      return new Date(v.createdAt) >= subDays(new Date(), selectedOption.days);
-    })
-    .slice(0, 50); // Only last 50 visitors
+  // ALL visitors filtered by time range (for stats)
+  const allFilteredVisitors = visitors.filter((v) => {
+    const selectedOption = timeRangeOptions.find(
+      (opt) => opt.value === timeRange,
+    );
+    if (!selectedOption?.days) return true;
+    return new Date(v.createdAt) >= subDays(new Date(), selectedOption.days);
+  });
 
-  // Process dates for charts - using filtered visitors
-  const dates = filteredVisitors.map((v) => new Date(v.createdAt));
+  // ONLY LAST 50 visitors for table display
+  const recentVisitors = allFilteredVisitors.slice(0, 50);
+
+  // Process dates for charts - using all filtered visitors
+  const dates = allFilteredVisitors.map((v) => new Date(v.createdAt));
 
   const startDate = dates.length
     ? new Date(Math.min(...dates.map((d) => d.getTime())))
     : subDays(new Date(), 30);
   const endDate = new Date();
 
-  // Daily data - limit to last 50 data points
+  // Daily data - using all filtered visitors
   const days = eachDayOfInterval({ start: startDate, end: endDate }).slice(-50);
   const dayCounts = days.map(
     (day) =>
@@ -173,9 +174,9 @@ function VisitorAnalytics() {
       ).length,
   );
 
-  // Country distribution (from filtered visitors)
+  // Country distribution (from all filtered visitors)
   const countryCount: Record<string, number> = {};
-  filteredVisitors.forEach((v) => {
+  allFilteredVisitors.forEach((v) => {
     const country = v.country || "Unknown";
     countryCount[country] = (countryCount[country] || 0) + 1;
   });
@@ -184,9 +185,9 @@ function VisitorAnalytics() {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
 
-  // Page views distribution
+  // Page views distribution (from all filtered visitors)
   const pageCount: Record<string, number> = {};
-  filteredVisitors.forEach((v) => {
+  allFilteredVisitors.forEach((v) => {
     const page = v.page || "/";
     pageCount[page] = (pageCount[page] || 0) + 1;
   });
@@ -195,20 +196,20 @@ function VisitorAnalytics() {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
 
-  // Calculate stats
-  const totalVisitors = filteredVisitors.length;
-  const uniqueIPs = new Set(filteredVisitors.map((v) => v.ip)).size;
-  const todayVisits = filteredVisitors.filter(
+  // Calculate stats using ALL visitors
+  const totalVisitors = allFilteredVisitors.length;
+  const uniqueIPs = new Set(allFilteredVisitors.map((v) => v.ip)).size;
+  const todayVisits = allFilteredVisitors.filter(
     (v) =>
       format(new Date(v.createdAt), "yyyy-MM-dd") ===
       format(new Date(), "yyyy-MM-dd"),
   ).length;
 
   // Calculate trends
-  const last7Days = filteredVisitors.filter(
+  const last7Days = allFilteredVisitors.filter(
     (v) => new Date(v.createdAt) >= subDays(new Date(), 7),
   ).length;
-  const previous7Days = filteredVisitors.filter((v) => {
+  const previous7Days = allFilteredVisitors.filter((v) => {
     const date = new Date(v.createdAt);
     return date >= subDays(new Date(), 14) && date < subDays(new Date(), 7);
   }).length;
@@ -364,7 +365,7 @@ function VisitorAnalytics() {
                     display: { xs: "none", sm: "block" },
                   }}
                 >
-                  Last 50 visitors analytics
+                  Showing {allFilteredVisitors.length} total visitors
                 </Typography>
               </Box>
             </Box>
@@ -949,7 +950,7 @@ function VisitorAnalytics() {
                     Recent Visitors
                   </Typography>
                   <Chip
-                    label={`${filteredVisitors.length} of 50`}
+                    label={`${recentVisitors.length} of ${allFilteredVisitors.length}`}
                     size="small"
                     sx={{
                       bgcolor: alpha(theme.palette.info.main, 0.1),
@@ -1019,7 +1020,7 @@ function VisitorAnalytics() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {filteredVisitors
+                    {recentVisitors
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
@@ -1138,7 +1139,7 @@ function VisitorAnalytics() {
               >
                 <TablePagination
                   component="div"
-                  count={filteredVisitors.length}
+                  count={recentVisitors.length}
                   page={page}
                   onPageChange={handleChangePage}
                   rowsPerPage={rowsPerPage}
@@ -1218,7 +1219,7 @@ function VisitorAnalytics() {
           <Box sx={{ display: "flex", gap: 1 }}>
             <Chip
               icon={<BarChartIcon sx={{ fontSize: "0.7rem !important" }} />}
-              label={`${totalVisitors} Views`}
+              label={`${totalVisitors} Total Views`}
               size="small"
               sx={{
                 bgcolor: alpha(theme.palette.primary.main, 0.1),
