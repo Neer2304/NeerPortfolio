@@ -155,7 +155,7 @@ function VisitorAnalytics() {
   });
 
   // ONLY LAST 50 visitors for table display
-  const recentVisitors = allFilteredVisitors.slice(0, 50);
+  const recentVisitors = allFilteredVisitors;
 
   // Process dates for charts - using all filtered visitors
   const dates = allFilteredVisitors.map((v) => new Date(v.createdAt));

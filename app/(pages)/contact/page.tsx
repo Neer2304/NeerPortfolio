@@ -702,14 +702,14 @@ function Contact() {
             <Typography variant="body2" color="text.secondary">
               Prefer email? Reach me directly at{" "}
               <Link
-                href="mailto:neer@example.com"
+                href="mailto:mehtaneer143@gmail.com"
                 style={{
                   color: theme.palette.primary.main,
                   textDecoration: "none",
                   fontWeight: 600,
                 }}
               >
-                neer@example.com
+                mehtaneer143@gmail.com
               </Link>
             </Typography>
             <Typography

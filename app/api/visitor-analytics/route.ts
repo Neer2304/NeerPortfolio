@@ -43,7 +43,7 @@ export async function GET() {
 
     const visitors = await VisitorAnalytics.find({})
       .sort({ createdAt: -1 })
-      .limit(100); // Add limit for performance
+      // .limit(100); // Add limit for performance
 
     return NextResponse.json(visitors, { status: 200 });
   } catch (err) {
